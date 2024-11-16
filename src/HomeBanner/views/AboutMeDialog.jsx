@@ -12,6 +12,23 @@ import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
 
 const AboutMeDialog = ({ open, onClose }) => {
+    const knowledge = [
+        { title: 'Web Development', details: 'React, Angular, Flask and Django' },
+        {
+            title: 'Mobile Development',
+            details: 'Flutter with Firebase integration and GetX/MobX for state management',
+        },
+        {
+            title: 'Machine Learning',
+            details: 'Skilled in machine learning techniques including model development, data preprocessing, and using frameworks like PyTorch and TensorFlow for building and training models. Experienced with data manipulation and analysis using Pandas, and familiar with other ML tools and libraries for tasks such as regression, classification, and clustering.',
+        },
+        {
+            title: 'Computer Vision',
+            details: 'Experienced in developing innovative solutions using OpenCV and other CV libraries for real-world challenges. Proficient in image processing, object detection, and building applications with computer vision techniques.',
+        },
+        { title: 'Personal Interests', details: 'Playing keyboard and drums' },
+    ];
+
     return (
         <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
             <DialogContent
@@ -29,7 +46,6 @@ const AboutMeDialog = ({ open, onClose }) => {
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
-                        textAlign: 'center',
                         mb: 3,
                     }}
                 >
@@ -56,37 +72,15 @@ const AboutMeDialog = ({ open, onClose }) => {
                         Hi, I'm Kani Obed
                     </Typography>
                     <Typography variant="body2" fontStyle="italic">
-                        Your versatile software developer
+                        A versatile software developer
                     </Typography>
                 </Box>
 
-                {/* Content Section */}
+                {/* Divider */}
                 <Divider sx={{ mb: 3, borderColor: 'rgba(255, 255, 255, 0.5)' }} />
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.2 }}
-                >
-                    <Typography variant="body1" paragraph>
-                        I am a passionate developer with expertise in:
-                    </Typography>
-                </motion.div>
-                {[
-                    { title: 'Web Development', details: 'React, Angular, and Material-UI' },
-                    {
-                        title: 'Mobile Development',
-                        details: 'Flutter with Firebase and GetX/MobX',
-                    },
-                    {
-                        title: 'Machine Learning',
-                        details: 'Malware detection using PyTorch and MALEVIS dataset',
-                    },
-                    {
-                        title: 'Computer Vision',
-                        details: 'Solving real-world challenges with CV solutions',
-                    },
-                    { title: 'Personal Interests', details: 'Playing keyboard and drums' },
-                ].map((item, index) => (
+
+                {/* Knowledge Section */}
+                {knowledge.map((item, index) => (
                     <Typography
                         key={index}
                         variant="body2"
@@ -95,12 +89,13 @@ const AboutMeDialog = ({ open, onClose }) => {
                         component={motion.div}
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.4, delay: 0.2 + index * 0.1 }}
+                        transition={{ duration: 0.4, delay: index * 0.2 }}
                     >
                         <strong>{item.title}:</strong> {item.details}
                     </Typography>
                 ))}
 
+                {/* Divider */}
                 <Divider sx={{ my: 3, borderColor: 'rgba(255, 255, 255, 0.5)' }} />
 
                 {/* Contact Information */}
