@@ -8,6 +8,7 @@ import AchievementsAndCertificates from './AchievementAndCert/views/AchievementA
 function App() {
   const myWorksRef = useRef(null);
   const contactMeRef = useRef(null);
+  const achievementsRef = useRef(null);
 
   const scrollToSection = (ref) => {
     ref.current?.scrollIntoView({ behavior: 'smooth' });
@@ -18,11 +19,14 @@ function App() {
       <HomeBanner
         onMyWorksClick={() => scrollToSection(myWorksRef)}
         onContactMeClick={() => scrollToSection(contactMeRef)}
+        onAchievementsClick={() => scrollToSection(achievementsRef)}
       />
       <div ref={myWorksRef}>
         <MyWorks />
       </div>
-      <AchievementsAndCertificates></AchievementsAndCertificates>
+      <div ref={achievementsRef}>
+        <AchievementsAndCertificates />
+      </div>
       <div ref={contactMeRef}>
         <ContactMe />
       </div>

@@ -12,6 +12,7 @@ import {
   DialogContent,
   DialogActions,
 } from '@mui/material';
+import { motion } from 'framer-motion';
 import PropTypes from 'prop-types';
 
 // AchievementCard Component for individual achievement/certificate
@@ -23,85 +24,92 @@ const AchievementCard = ({ title, description, year, image }) => {
 
   return (
     <>
-      <Card
-        sx={{
-          borderRadius: 2,
-          boxShadow: 3,
-          width: 300,
-          height: 350,
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-between',
-          ':hover': {
-            boxShadow: 6,
-            transform: 'scale(1.03)',
-            transition: '0.3s',
-          },
-        }}
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: false }}
+        transition={{ duration: 0.6 }}
       >
-        {/* Image Section */}
-        <CardMedia
-          component="img"
-          height="150"
-          image={image}
-          alt={title}
+        <Card
           sx={{
-            objectFit: 'contain',
-            backgroundColor: '#f0f0f0',
-          }}
-        />
-        {/* Text Content */}
-        <CardContent
-          sx={{
-            flexGrow: 1,
+            borderRadius: 2,
+            boxShadow: 3,
+            width: 300,
+            height: 350,
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'flex-start',
+            justifyContent: 'space-between',
+            ':hover': {
+              boxShadow: 6,
+              transform: 'scale(1.03)',
+              transition: '0.3s',
+            },
           }}
         >
-          <Typography
-            variant="h6"
-            sx={{ fontWeight: 'bold', mb: 1, fontSize: '1rem', textAlign: 'center' }}
-          >
-            {title}
-          </Typography>
-          <Typography
-            variant="body2"
-            color="text.secondary"
-            sx={{ flexGrow: 1, fontSize: '0.875rem', textAlign: 'center' }}
-          >
-            {description}
-          </Typography>
-          <Typography
-            variant="caption"
-            color="text.secondary"
-            sx={{ textAlign: 'center' }}
-          >
-            {year}
-          </Typography>
-        </CardContent>
-        {/* Learn More Button */}
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            mt: 'auto',
-            mb: 2,
-          }}
-        >
-          <Button
-            variant="outlined"
-            size="small"
+          {/* Image Section */}
+          <CardMedia
+            component="img"
+            height="150"
+            image={image}
+            alt={title}
             sx={{
-              color: '#4caf50',
-              borderColor: '#4caf50',
+              objectFit: 'contain',
+              backgroundColor: '#f0f0f0',
             }}
-            onClick={handleOpen}
+          />
+          {/* Text Content */}
+          <CardContent
+            sx={{
+              flexGrow: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'flex-start',
+            }}
           >
-            Learn More
-          </Button>
-        </Box>
-      </Card>
+            <Typography
+              variant="h6"
+              sx={{ fontWeight: 'bold', mb: 1, fontSize: '1rem', textAlign: 'center' }}
+            >
+              {title}
+            </Typography>
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              sx={{ flexGrow: 1, fontSize: '0.875rem', textAlign: 'center' }}
+            >
+              {description}
+            </Typography>
+            <Typography
+              variant="caption"
+              color="text.secondary"
+              sx={{ textAlign: 'center' }}
+            >
+              {year}
+            </Typography>
+          </CardContent>
+          {/* Learn More Button */}
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              mt: 'auto',
+              mb: 2,
+            }}
+          >
+            <Button
+              variant="outlined"
+              size="small"
+              sx={{
+                color: '#4caf50',
+                borderColor: '#4caf50',
+              }}
+              onClick={handleOpen}
+            >
+              Learn More
+            </Button>
+          </Box>
+        </Card>
+      </motion.div>
 
       {/* Full-Screen Dialog */}
       <Dialog fullScreen open={open} onClose={handleClose}>
