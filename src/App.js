@@ -1,24 +1,32 @@
-import logo from './logo.svg';
 import './App.css';
+import { useRef } from 'react';
+import ContactMe from './ContactMe/views/ContactMe';
+import HomeBanner from './HomeBanner/views/HomeBanner';
+import MyWorks from './Projects/views/Projects';
+import AchievementsAndCertificates from './AchievementAndCert/views/AchievementAndCert';
 
 function App() {
+  const myWorksRef = useRef(null);
+  const contactMeRef = useRef(null);
+
+  const scrollToSection = (ref) => {
+    ref.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <HomeBanner
+        onMyWorksClick={() => scrollToSection(myWorksRef)}
+        onContactMeClick={() => scrollToSection(contactMeRef)}
+      />
+      <div ref={myWorksRef}>
+        <MyWorks />
+      </div>
+      <div ref={contactMeRef}>
+        <ContactMe />
+      </div>
+      <AchievementsAndCertificates></AchievementsAndCertificates>
+    </>
   );
 }
 
