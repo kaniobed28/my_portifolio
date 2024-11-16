@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Box,
   Card,
@@ -7,56 +7,134 @@ import {
   Typography,
   Grid,
   Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
 } from '@mui/material';
 import PropTypes from 'prop-types';
 
 // AchievementCard Component for individual achievement/certificate
-const AchievementCard = ({ title, description, year, image }) => (
-  <Card
-    sx={{
-      borderRadius: 2,
-      boxShadow: 3,
-      ':hover': {
-        boxShadow: 6,
-        transform: 'scale(1.03)',
-        transition: '0.3s',
-      },
-    }}
-  >
-    {/* Image Section */}
-    <CardMedia
-      component="img"
-      height="200"
-      image={image}
-      alt={title}
-      sx={{
-        objectFit: 'contain', // Ensures image fits without cropping
-        backgroundColor: '#f0f0f0',
-      }}
-    />
-    {/* Text Content */}
-    <CardContent>
-      <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1 }}>
-        {title}
-      </Typography>
-      <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-        {description}
-      </Typography>
-      <Typography variant="caption" color="text.secondary">
-        {year}
-      </Typography>
-      {/* Optional Action */}
-      <Button
-        variant="outlined"
-        size="small"
-        sx={{ mt: 1, color: '#4caf50', borderColor: '#4caf50' }}
-        onClick={() => alert(`${title} details coming soon!`)}
+const AchievementCard = ({ title, description, year, image }) => {
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  return (
+    <>
+      <Card
+        sx={{
+          borderRadius: 2,
+          boxShadow: 3,
+          width: 300,
+          height: 350,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          ':hover': {
+            boxShadow: 6,
+            transform: 'scale(1.03)',
+            transition: '0.3s',
+          },
+        }}
       >
-        Learn More
-      </Button>
-    </CardContent>
-  </Card>
-);
+        {/* Image Section */}
+        <CardMedia
+          component="img"
+          height="150"
+          image={image}
+          alt={title}
+          sx={{
+            objectFit: 'contain',
+            backgroundColor: '#f0f0f0',
+          }}
+        />
+        {/* Text Content */}
+        <CardContent
+          sx={{
+            flexGrow: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'flex-start',
+          }}
+        >
+          <Typography
+            variant="h6"
+            sx={{ fontWeight: 'bold', mb: 1, fontSize: '1rem', textAlign: 'center' }}
+          >
+            {title}
+          </Typography>
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{ flexGrow: 1, fontSize: '0.875rem', textAlign: 'center' }}
+          >
+            {description}
+          </Typography>
+          <Typography
+            variant="caption"
+            color="text.secondary"
+            sx={{ textAlign: 'center' }}
+          >
+            {year}
+          </Typography>
+        </CardContent>
+        {/* Learn More Button */}
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            mt: 'auto',
+            mb: 2,
+          }}
+        >
+          <Button
+            variant="outlined"
+            size="small"
+            sx={{
+              color: '#4caf50',
+              borderColor: '#4caf50',
+            }}
+            onClick={handleOpen}
+          >
+            Learn More
+          </Button>
+        </Box>
+      </Card>
+
+      {/* Full-Screen Dialog */}
+      <Dialog fullScreen open={open} onClose={handleClose}>
+        <DialogTitle>{title}</DialogTitle>
+        <DialogContent>
+          <Typography variant="h6" sx={{ mb: 2 }}>
+            {description}
+          </Typography>
+          <CardMedia
+            component="img"
+            image={image}
+            alt={title}
+            sx={{
+              objectFit: 'contain',
+              backgroundColor: '#f0f0f0',
+              maxHeight: 400,
+              margin: '0 auto',
+              display: 'block',
+            }}
+          />
+          <Typography variant="body1" sx={{ mt: 2 }}>
+            Year: {year}
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} variant="contained" color="primary">
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
+  );
+};
 
 // Main AchievementsAndCertificates Component
 const AchievementsAndCertificates = () => {
@@ -79,14 +157,12 @@ const AchievementsAndCertificates = () => {
       year: '2019',
       image: '/images/testimonial.png',
     },
-    
     {
       title: 'NSMQ Regional Qualifiers',
       description: 'Took my school to Regional level and won for the first time 2020.',
       year: '2020',
       image: '/images/regional.png',
     },
-    
   ];
 
   return (
@@ -102,9 +178,9 @@ const AchievementsAndCertificates = () => {
       >
         Achievements & Certificates
       </Typography>
-      <Grid container spacing={4}>
+      <Grid container spacing={4} justifyContent="center">
         {achievements.map((achievement, index) => (
-          <Grid item xs={12} sm={6} md={4} key={index}>
+          <Grid item key={index}>
             <AchievementCard
               title={achievement.title}
               description={achievement.description}

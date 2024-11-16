@@ -22,10 +22,10 @@ function App() {
       <div ref={myWorksRef}>
         <MyWorks />
       </div>
+      <AchievementsAndCertificates></AchievementsAndCertificates>
       <div ref={contactMeRef}>
         <ContactMe />
       </div>
-      <AchievementsAndCertificates></AchievementsAndCertificates>
     </>
   );
 }
