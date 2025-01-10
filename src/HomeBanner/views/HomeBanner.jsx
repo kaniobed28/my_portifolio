@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { Box, Typography, Button, Container, Stack } from '@mui/material';
+import { Box, Typography, Button, Container, Stack, IconButton } from '@mui/material';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import { LinkedIn, GitHub,WhatsApp } from '@mui/icons-material';
 import AboutMeDialog from './AboutMeDialog';
 
 const HomeBanner = ({ onMyWorksClick, onContactMeClick, onAchievementsClick }) => {
   const { ref: titleRef, inView: titleInView } = useInView({ triggerOnce: true });
   const { ref: buttonsRef, inView: buttonsInView } = useInView({ triggerOnce: true });
 
-  // State for showing dialog
   const [isAboutMeOpen, setIsAboutMeOpen] = useState(false);
 
   const handleOpenAboutMe = () => setIsAboutMeOpen(true);
@@ -83,6 +83,17 @@ const HomeBanner = ({ onMyWorksClick, onContactMeClick, onAchievementsClick }) =
             </Typography>
           </motion.div>
 
+          {/* Rotating Quotes */}
+          <Typography
+            sx={{
+              mb: 4,
+              fontSize: { xs: '1rem', md: '1.5rem' },
+              color: '#ddd',
+            }}
+          >
+            "Crafting bespoke digital solutions for your business needs."
+          </Typography>
+
           {/* Call-to-Action Buttons Animation */}
           <motion.div
             ref={buttonsRef}
@@ -146,6 +157,45 @@ const HomeBanner = ({ onMyWorksClick, onContactMeClick, onAchievementsClick }) =
                 About Me
               </Button>
             </Stack>
+          </motion.div>
+
+          {/* Social Media Icons */}
+          <Stack direction="row" justifyContent="center" spacing={2} sx={{ mt: 4 }}>
+            <IconButton
+              href="https://www.linkedin.com/in/kani-obed"
+              target="_blank"
+              sx={{ color: '#4caf50' }}
+            >
+              <LinkedIn />
+            </IconButton>
+            <IconButton
+              href="https://github.com/kaniobed28"
+              target="_blank"
+              sx={{ color: '#4caf50' }}
+            >
+              <GitHub />
+            </IconButton>
+            <IconButton
+              href="https://wa.me/+233593626857"
+              target="_blank"
+              sx={{ color: '#4caf50' }}
+            >
+              <WhatsApp />
+            </IconButton>
+          </Stack>
+
+          {/* Scroll Down Indicator */}
+          <motion.div
+            animate={{ y: [0, 10, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity }}
+            style={{ marginTop: '20px' }}
+          >
+            <Typography
+              variant="caption"
+              sx={{ color: '#ddd', fontSize: '0.9rem' }}
+            >
+              Scroll Down
+            </Typography>
           </motion.div>
         </Container>
       </Box>
