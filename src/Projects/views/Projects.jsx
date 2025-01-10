@@ -15,7 +15,7 @@ const projects = [
     title: 'Campus Sell (Next.js)',
     description: 'An online marketplace for student to enhance buy and sell  on Campus. Users can post ads, manage offers, and chat securely with potential buyers.',
     image: '/images/campus-sell-logo-transparent.png',
-    liveLink: 'https://campussell.github.io/',
+    liveLink: 'https://campussell.vercel.app/',
     githubLink: 'https://github.com/kaniobed28/campus-sell-next-js',
   },
   {
