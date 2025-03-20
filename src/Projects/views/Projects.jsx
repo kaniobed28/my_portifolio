@@ -19,10 +19,10 @@ const projects = [
     githubLink: 'https://github.com/kaniobed28/campus-sell-next-js',
   },
   {
-    title: 'Class Room (React.js)',
-    description: 'An Online class room platform made with alliance française in mind to facilitate easy communication and resources of material between students and teachers.',
-    image: '/images/quiz.png',
-    liveLink: 'https://blt-classroom.netlify.app/',
+    title: 'Memory FlashCard (React.js)',
+    description: 'A powerful tool to help you easily store and review words, their definitions, and examples for better learning!',
+    image: '/images/flashcard.jpg',
+    liveLink: 'https://memory-flashcard.netlify.app/',
   },
   {
     title: 'Verbo (Flutter)',
@@ -44,6 +44,18 @@ const projects = [
     image: 'images/quiz-app.png',
     githubLink: 'https://github.com/kaniobed28/quiz-app',
     liveLink: 'https://quizz-mast.netlify.app/',
+  },
+  {
+    title: 'Smart Box (React.js)',
+    description: 'Smart Box Click Game is a game that challenges players to click on a random box with certain time limit and score points.',
+    image: '/images/smart-box.ico',
+    liveLink: 'https://the-smart-box.netlify.app/',
+  },
+  {
+    title: 'Class Room (React.js)',
+    description: 'An Online class room platform made with alliance française in mind to facilitate easy communication and resources of material between students and teachers.',
+    image: '/images/quiz.png',
+    liveLink: 'https://blt-classroom.netlify.app/',
   },
   {
     title: 'Birthing Lovers Network (Flutter)',
