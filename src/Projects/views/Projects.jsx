@@ -29,7 +29,7 @@ const projects = [
     description: 'An interactive language-learning platform with daily challenges, pronunciation exercises, voice transcription, and multilingual options.',
     image: 'images/verbo.jpg',
     githubLink: 'https://github.com/kaniobed28/verbo/',
-    liveLink: 'https://kaniobed28.github.io/',
+    liveLink: 'https://verbo-obed.netlify.app/',
   },
   {
     title: 'COP Lille (React.js)',
