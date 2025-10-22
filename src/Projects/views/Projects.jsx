@@ -65,11 +65,11 @@ const projects = [
     githubLink: 'https://github.com/kaniobed28/bln-official-site',
   },
   {
-    title: 'MarketX (React.js)',
-    description: 'A grand version of Campus Sell. An e-commerce platform for everyday people to buy and sell items. Users can post ads, manage offers, and chat securely with potential buyers.',
+    title: 'SPEC-GEN (React.js)',
+    description: 'A specification generator tool that helps developers create specifications quickly and easily by providing a user-friendly interface.',
     image: 'images/marketx.png',
-    liveLink: 'https://market-x.netlify.app/',
-    githubLink: 'https://github.com/kaniobed28/marketx',
+    liveLink: 'https://spec-generator.netlify.app/',
+    githubLink: 'https://github.com/kaniobed28/spec_generator',
   },
   {
     title: 'Power of PicoW',
