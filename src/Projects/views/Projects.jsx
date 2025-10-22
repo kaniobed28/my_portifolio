@@ -59,10 +59,10 @@ const projects = [
   },
   {
     title: 'Birthing Lovers Network (Flutter)',
-    description: 'A church website developed for the BLN Ghanaian community, featuring announcements, resources, and event schedules for the SOM24 project.',
+    description: 'A church website developed for the BLN Ghanaian community, featuring announcements, resources, and event schedules for the SOM25 project.',
     image: 'images/blnlogo.jpg',
-    liveLink: 'https://birthingloversnetwork.github.io/',
-    githubLink: 'https://github.com/kaniobed28/BLN-website',
+    liveLink: 'https://birthingloversnetwork.netlify.app/',
+    githubLink: 'https://github.com/kaniobed28/bln-official-site',
   },
   {
     title: 'MarketX (React.js)',
