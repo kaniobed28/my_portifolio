@@ -1,0 +1,9 @@
+[build]
+  command = "npm run build"
+  publish = "build"
+
+[build.environment]
+  NODE_VERSION = "20"
+  # Set the build image to Ubuntu 22.04 (Jammy)
+  # This resolves the "Focal build image" deprecation warning
+  NETLIFY_BUILD_IMAGE = "jammy"
