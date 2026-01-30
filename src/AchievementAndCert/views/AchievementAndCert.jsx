@@ -10,7 +10,6 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  DialogActions,
   Container,
 } from '@mui/material';
 import { motion } from 'framer-motion';
