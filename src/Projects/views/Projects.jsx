@@ -86,19 +86,28 @@ const projects = [
 ];
 
 const MyWorks = () => (
-  <Box sx={{ py: 8, px: 4, backgroundColor: '#f9f9f9' }}>
-    <Typography
-      variant="h4"
-      sx={{
-        fontWeight: 'bold',
-        textAlign: 'center',
-        mb: 6,
-        color: '#333',
-      }}
+  <Box sx={{ py: 12, px: { xs: 2, md: 8 }, backgroundColor: 'background.default' }}>
+    <motion.div
+      initial={{ opacity: 0, y: -20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 1 }}
     >
-      My Projects
-    </Typography>
-    <Grid container spacing={4}>
+      <Typography
+        variant="h2"
+        sx={{
+          textAlign: 'center',
+          mb: 8,
+          background: (theme) => `linear-gradient(45deg, #fff 30%, ${theme.palette.secondary.main} 90%)`,
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          fontSize: { xs: '2.5rem', md: '3.5rem' },
+        }}
+      >
+        Featured Projects
+      </Typography>
+    </motion.div>
+    <Grid container spacing={4} justifyContent="center">
       {projects.map((project, index) => (
         <Grid item xs={12} sm={6} md={4} key={index}>
           <motion.div
@@ -106,6 +115,7 @@ const MyWorks = () => (
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
+            style={{ height: '100%' }}
           >
             <ProjectCard project={project} />
           </motion.div>

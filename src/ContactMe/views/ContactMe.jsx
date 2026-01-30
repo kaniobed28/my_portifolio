@@ -36,14 +36,26 @@ const ContactMe = () => {
   return (
     <Box
       sx={{
-        py: 10,
-        backgroundColor: '#f4f6f9',
-        backgroundImage: 'url(/background-image.jpg)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
+        py: 12,
+        backgroundColor: 'background.default',
+        position: 'relative',
+        overflow: 'hidden',
       }}
     >
-      <Container>
+      {/* Background Gradient */}
+      <Box
+        sx={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          height: '100%',
+          background: 'linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0, 230, 118, 0.05) 100%)',
+          pointerEvents: 'none'
+        }}
+      />
+
+      <Container maxWidth="md" sx={{ position: 'relative', zIndex: 1 }}>
         {/* Title with animation */}
         <motion.div
           initial={{ opacity: 0, y: -50 }}
@@ -52,14 +64,15 @@ const ContactMe = () => {
           transition={{ duration: 0.2 }}
         >
           <Typography
-            variant="h3"
+            variant="h2"
             sx={{
-              fontWeight: '700',
+              fontWeight: 700,
               textAlign: 'center',
-              mb: 6,
-              color: '#333',
-              textShadow: '2px 2px 4px rgba(0, 0, 0, 0.4)',
-              fontSize: '2.5rem',
+              mb: 8,
+              background: (theme) => `linear-gradient(45deg, #fff 30%, ${theme.palette.primary.main} 90%)`,
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              fontSize: { xs: '2.5rem', md: '3.5rem' },
             }}
           >
             Get In Touch
@@ -73,151 +86,108 @@ const ContactMe = () => {
           whileInView="visible"
           viewport={{ once: false }}
         >
-          <Grid container spacing={6} justifyContent="center">
-            <Grid item xs={12} md={6}>
-              {/* Contact Details */}
-              <motion.div variants={itemVariants}>
-                <Typography
-                  variant="h5"
-                  sx={{
-                    fontWeight: '600',
-                    mb: 3,
-                    color: '#444',
-                    fontSize: '1.25rem',
-                    textTransform: 'uppercase',
-                  }}
-                >
-                  Reach Me At:
-                </Typography>
-              </motion.div>
-
-              {/* Phone */}
-              <motion.div variants={itemVariants}>
-                <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
-                  <PhoneIcon
-                    sx={{ mr: 2, color: 'primary.main', fontSize: '2rem' }}
-                  />
-                  <Typography
-                    variant="body1"
-                    sx={{ color: '#555', fontSize: '1.2rem' }}
-                  >
-                    +33 7 53 38 41 84
+          <Box
+            sx={{
+              background: 'rgba(255, 255, 255, 0.05)',
+              backdropFilter: 'blur(10px)',
+              borderRadius: 4,
+              p: { xs: 4, md: 8 },
+              border: '1px solid rgba(255, 255, 255, 0.1)',
+            }}
+          >
+            <Grid container spacing={6} justifyContent="center">
+              <Grid item xs={12} md={6}>
+                {/* Contact Details */}
+                <motion.div variants={itemVariants}>
+                  <Typography variant="h5" sx={{ fontWeight: 600, mb: 4, color: 'text.primary', textTransform: 'uppercase', letterSpacing: 1 }}>
+                    Reach Me At:
                   </Typography>
-                </Box>
-              </motion.div>
+                </motion.div>
 
-              {/* Email */}
-              <motion.div variants={itemVariants}>
-                <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
-                  <EmailIcon
-                    sx={{ mr: 2, color: 'primary.main', fontSize: '2rem' }}
-                  />
-                  <Typography
-                    variant="body1"
-                    sx={{ color: '#555', fontSize: '1.2rem' }}
-                  >
-                    kaniobed28@gmail.com
+                <motion.div variants={itemVariants}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', mb: 4 }}>
+                    <PhoneIcon sx={{ mr: 2, color: 'primary.main', fontSize: '2rem' }} />
+                    <Typography variant="body1" sx={{ color: 'text.secondary', fontSize: '1.2rem' }}>
+                      +33 7 53 38 41 84
+                    </Typography>
+                  </Box>
+                </motion.div>
+
+                <motion.div variants={itemVariants}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
+                    <EmailIcon sx={{ mr: 2, color: 'primary.main', fontSize: '2rem' }} />
+                    <Typography variant="body1" sx={{ color: 'text.secondary', fontSize: '1.2rem' }}>
+                      kaniobed28@gmail.com
+                    </Typography>
+                  </Box>
+                </motion.div>
+              </Grid>
+
+              <Grid item xs={12} md={6}>
+                <motion.div variants={itemVariants}>
+                  <Typography variant="h5" sx={{ fontWeight: 600, mb: 4, color: 'text.primary', textTransform: 'uppercase', letterSpacing: 1 }}>
+                    Follow Me:
                   </Typography>
-                </Box>
-              </motion.div>
+                </motion.div>
 
-              <motion.div variants={itemVariants}>
-                <Divider sx={{ my: 5, borderColor: '#ddd' }} />
-              </motion.div>
-
-              {/* Social Media Links */}
-              <motion.div variants={itemVariants}>
-                <Typography
-                  variant="h5"
-                  sx={{
-                    fontWeight: '600',
-                    mb: 3,
-                    color: '#444',
-                    fontSize: '1.25rem',
-                    textTransform: 'uppercase',
-                  }}
-                >
-                  Follow Me:
-                </Typography>
-              </motion.div>
-
-              <motion.div variants={containerVariants}>
-                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-                  <motion.div variants={itemVariants}>
-                    <Link
-                      href="https://github.com/kaniobed28"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
+                <motion.div variants={containerVariants}>
+                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                    <motion.div variants={itemVariants}>
                       <Button
-                        variant="contained"
-                        color="primary"
+                        variant="outlined"
                         fullWidth
                         startIcon={<GitHubIcon />}
-                        sx={{ fontSize: '1.1rem', padding: '12px 0' }}
+                        href="https://github.com/kaniobed28"
+                        target="_blank"
+                        sx={{ py: 1.5, justifyContent: 'flex-start', px: 4, borderColor: 'rgba(255,255,255,0.2)', color: 'text.primary', '&:hover': { borderColor: 'primary.main', bgcolor: 'rgba(0,230,118,0.1)' } }}
                       >
                         GitHub
                       </Button>
-                    </Link>
-                  </motion.div>
+                    </motion.div>
 
-                  <motion.div variants={itemVariants}>
-                    <Link
-                      href="https://www.linkedin.com/in/kani-obed"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
+                    <motion.div variants={itemVariants}>
                       <Button
-                        variant="contained"
-                        color="primary"
+                        variant="outlined"
                         fullWidth
                         startIcon={<LinkedInIcon />}
-                        sx={{ fontSize: '1.1rem', padding: '12px 0' }}
+                        href="https://www.linkedin.com/in/kani-obed"
+                        target="_blank"
+                        sx={{ py: 1.5, justifyContent: 'flex-start', px: 4, borderColor: 'rgba(255,255,255,0.2)', color: 'text.primary', '&:hover': { borderColor: '#0077b5', bgcolor: 'rgba(0,119,181,0.1)' } }}
                       >
                         LinkedIn
                       </Button>
-                    </Link>
-                  </motion.div>
+                    </motion.div>
 
-                  <motion.div variants={itemVariants}>
-                    <Link
-                      href="https://wa.me/233593626857"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
+                    <motion.div variants={itemVariants}>
                       <Button
-                        variant="contained"
-                        color="success"
+                        variant="outlined"
                         fullWidth
                         startIcon={<WhatsAppIcon />}
-                        sx={{ fontSize: '1.1rem', padding: '12px 0' }}
+                        href="https://wa.me/233593626857"
+                        target="_blank"
+                        sx={{ py: 1.5, justifyContent: 'flex-start', px: 4, borderColor: 'rgba(255,255,255,0.2)', color: 'text.primary', '&:hover': { borderColor: '#25D366', bgcolor: 'rgba(37,211,102,0.1)' } }}
                       >
                         WhatsApp
                       </Button>
-                    </Link>
-                  </motion.div>
+                    </motion.div>
 
-                  <motion.div variants={itemVariants}>
-                    <Link
-                      href="https://www.youtube.com/@kaniobed28"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
+                    <motion.div variants={itemVariants}>
                       <Button
-                        variant="contained"
-                        color="error"
+                        variant="outlined"
                         fullWidth
                         startIcon={<YouTubeIcon />}
-                        sx={{ fontSize: '1.1rem', padding: '12px 0' }}
+                        href="https://www.youtube.com/@kaniobed28"
+                        target="_blank"
+                        sx={{ py: 1.5, justifyContent: 'flex-start', px: 4, borderColor: 'rgba(255,255,255,0.2)', color: 'text.primary', '&:hover': { borderColor: '#FF0000', bgcolor: 'rgba(255,0,0,0.1)' } }}
                       >
                         YouTube
                       </Button>
-                    </Link>
-                  </motion.div>
-                </Box>
-              </motion.div>
+                    </motion.div>
+                  </Box>
+                </motion.div>
+              </Grid>
             </Grid>
-          </Grid>
+          </Box>
         </motion.div>
       </Container>
     </Box>
