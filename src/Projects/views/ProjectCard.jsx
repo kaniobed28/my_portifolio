@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardActionArea, CardContent, CardMedia, Typography, IconButton, Tooltip } from '@mui/material';
+import { Card, CardActionArea, CardContent, CardMedia, Typography, IconButton, Tooltip, Box } from '@mui/material';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LaunchIcon from '@mui/icons-material/Launch';
 import PropTypes from 'prop-types';
@@ -12,39 +12,48 @@ const ProjectCard = ({ project }) => {
   return (
     <Card
       sx={{
-        borderRadius: 2,
-        boxShadow: 3,
-        width: 300, // Set consistent width for all cards
-        height: 400, // Set consistent height for all cards
+        height: '100%',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'space-between', // Ensures content is evenly spaced
-        ':hover': {
-          boxShadow: 6,
-          transform: 'scale(1.03)',
-          transition: '0.3s',
+        borderRadius: 4,
+        background: 'rgba(255, 255, 255, 0.05)',
+        backdropFilter: 'blur(10px)',
+        border: '1px solid rgba(255, 255, 255, 0.1)',
+        boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
+        transition: 'all 0.3s ease-in-out',
+        '&:hover': {
+          transform: 'translateY(-10px)',
+          boxShadow: '0 20px 40px rgba(0, 0, 0, 0.4)',
+          border: '1px solid rgba(0, 230, 118, 0.5)',
         },
       }}
     >
-      <CardActionArea sx={{ flex: '1 0 auto' }}>
-        <CardMedia
-          component="img"
-          height="150" // Fixed height for images
-          image={project.image}
-          alt={project.title}
-          sx={{
-            objectFit: 'contain', // Ensures image fits without distortion
-            backgroundColor: '#f0f0f0',
-          }}
-        />
-        <CardContent sx={{ flexGrow: 1 }}>
+      <CardActionArea sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+        <Box sx={{ width: '100%', overflow: 'hidden', height: 200, bgcolor: 'rgba(0,0,0,0.2)' }}>
+          <CardMedia
+            component="img"
+            image={project.image}
+            alt={project.title}
+            sx={{
+              height: '100%',
+              width: '100%',
+              objectFit: 'contain',
+              padding: 2,
+              transition: 'transform 0.5s',
+              '&:hover': {
+                transform: 'scale(1.1)',
+              },
+            }}
+          />
+        </Box>
+        <CardContent sx={{ flexGrow: 1, width: '100%' }}>
           <Typography
             variant="h6"
             sx={{
-              fontWeight: 'bold',
-              fontSize: '1rem', // Consistent font size
+              fontWeight: 600,
               mb: 1,
-              textAlign: 'center', // Center-align text
+              color: 'primary.main',
+              fontFamily: '"Poppins", sans-serif',
             }}
           >
             {project.title}
@@ -52,18 +61,22 @@ const ProjectCard = ({ project }) => {
           <Typography
             variant="body2"
             color="text.secondary"
-            sx={{ fontSize: '0.875rem', textAlign: 'center' }} // Center-align description
+            sx={{
+              lineHeight: 1.6,
+              fontSize: '0.9rem'
+            }}
           >
             {project.description}
           </Typography>
         </CardContent>
       </CardActionArea>
-      <CardContent
+      <Box
         sx={{
+          p: 2,
           display: 'flex',
-          justifyContent: 'center', // Align buttons centrally
-          alignItems: 'center',
+          justifyContent: 'flex-end',
           gap: 1,
+          borderTop: '1px solid rgba(255, 255, 255, 0.05)',
         }}
       >
         {project.githubLink && (
@@ -74,6 +87,10 @@ const ProjectCard = ({ project }) => {
               rel="noopener noreferrer"
               color="primary"
               size="small"
+              sx={{
+                border: '1px solid rgba(0, 230, 118, 0.3)',
+                '&:hover': { bgcolor: 'rgba(0, 230, 118, 0.1)' }
+              }}
             >
               <GitHubIcon fontSize="small" />
             </IconButton>
@@ -86,14 +103,18 @@ const ProjectCard = ({ project }) => {
               href={project.liveLink}
               target="_blank"
               rel="noopener noreferrer"
-              color="primary"
+              color="secondary"
               size="small"
+              sx={{
+                border: '1px solid rgba(41, 182, 246, 0.3)',
+                '&:hover': { bgcolor: 'rgba(41, 182, 246, 0.1)' }
+              }}
             >
               <LaunchIcon fontSize="small" />
             </IconButton>
           </Tooltip>
         )}
-      </CardContent>
+      </Box>
     </Card>
   );
 };
