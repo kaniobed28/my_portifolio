@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, Typography, Stack, Link as MuiLink } from '@mui/material';
 import NorthEastIcon from '@mui/icons-material/NorthEast';
 import GitHubIcon from '@mui/icons-material/GitHub';
+import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
 import PropTypes from 'prop-types';
 import { tokens } from '../../theme';
 
@@ -14,6 +15,71 @@ const projectShape = {
   image: PropTypes.string.isRequired,
   githubLink: PropTypes.string,
   liveLink: PropTypes.string,
+  links: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      href: PropTypes.string.isRequired,
+      kind: PropTypes.oneOf(['live', 'code', 'docs']),
+    })
+  ),
+};
+
+const KIND_ICON = {
+  live: <NorthEastIcon sx={{ fontSize: 12 }} />,
+  code: <GitHubIcon sx={{ fontSize: 13 }} />,
+  docs: <DescriptionOutlinedIcon sx={{ fontSize: 13 }} />,
+};
+
+/**
+ * Normalises the two data shapes into one list, so a project can declare
+ * either `links: [...]` or the simpler `liveLink` / `githubLink` pair.
+ */
+const getLinks = (project) => {
+  if (project.links?.length) return project.links;
+  return [
+    project.liveLink && { label: 'Live', href: project.liveLink, kind: 'live' },
+    project.githubLink && { label: 'Code', href: project.githubLink, kind: 'code' },
+  ].filter(Boolean);
+};
+
+/** Pill-shaped external link used by both card variants. */
+const LinkChip = ({ link, project }) => (
+  <MuiLink
+    href={link.href}
+    target="_blank"
+    rel="noopener noreferrer"
+    underline="none"
+    aria-label={`${project.title} — ${link.label}`}
+    sx={{
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: 0.6,
+      px: 1.25,
+      py: 0.5,
+      borderRadius: 999,
+      border: `1px solid ${tokens.hairline}`,
+      color: 'text.secondary',
+      fontFamily: '"JetBrains Mono", monospace',
+      fontSize: '0.68rem',
+      letterSpacing: '0.08em',
+      textTransform: 'uppercase',
+      whiteSpace: 'nowrap',
+      transition: 'color 200ms, border-color 200ms, background-color 200ms',
+      '&:hover': {
+        color: tokens.accent,
+        borderColor: tokens.accent,
+        bgcolor: tokens.accentSoft,
+      },
+    }}
+  >
+    {link.label}
+    {KIND_ICON[link.kind] || KIND_ICON.live}
+  </MuiLink>
+);
+
+LinkChip.propTypes = {
+  link: PropTypes.object.isRequired,
+  project: PropTypes.object.isRequired,
 };
 
 const Tag = ({ children }) => (
@@ -35,42 +101,14 @@ const Tag = ({ children }) => (
 
 Tag.propTypes = { children: PropTypes.node.isRequired };
 
-const ActionLink = ({ href, icon, children }) => (
-  <MuiLink
-    href={href}
-    target="_blank"
-    rel="noopener noreferrer"
-    underline="none"
-    sx={{
-      display: 'inline-flex',
-      alignItems: 'center',
-      gap: 0.75,
-      color: 'text.primary',
-      fontSize: '0.875rem',
-      fontWeight: 500,
-      pb: 0.5,
-      borderBottom: `1px solid ${tokens.hairlineStrong}`,
-      transition: 'color 200ms, border-color 200ms',
-      '&:hover': { color: tokens.accent, borderColor: tokens.accent },
-    }}
-  >
-    {children}
-    {icon}
-  </MuiLink>
-);
-
-ActionLink.propTypes = {
-  href: PropTypes.string.isRequired,
-  icon: PropTypes.node,
-  children: PropTypes.node.isRequired,
-};
-
 /**
  * Featured row — image on one side, copy on the other, alternating per index
  * so the eye zig-zags down the page.
  */
 export const FeaturedProject = ({ project, index }) => {
   const flip = index % 2 === 1;
+  const links = getLinks(project);
+  const liveCount = links.filter((l) => l.kind === 'live').length;
 
   return (
     <Box
@@ -134,7 +172,7 @@ export const FeaturedProject = ({ project, index }) => {
           }}
         />
 
-        {project.liveLink && (
+        {liveCount > 0 && (
           <Stack
             direction="row"
             alignItems="center"
@@ -153,7 +191,7 @@ export const FeaturedProject = ({ project, index }) => {
           >
             <Box sx={{ width: 5, height: 5, borderRadius: '50%', bgcolor: '#4ADE80' }} />
             <Typography variant="overline" sx={{ fontSize: '0.58rem', color: 'text.secondary' }}>
-              Live
+              {liveCount > 1 ? `${liveCount} apps live` : 'Live'}
             </Typography>
           </Stack>
         )}
@@ -193,23 +231,25 @@ export const FeaturedProject = ({ project, index }) => {
           </Stack>
         )}
 
-        <Stack direction="row" spacing={3} alignItems="center">
-          {project.liveLink && (
-            <ActionLink href={project.liveLink} icon={<NorthEastIcon sx={{ fontSize: 14 }} />}>
-              Visit live site
-            </ActionLink>
-          )}
-          {project.githubLink && (
-            <ActionLink href={project.githubLink} icon={<GitHubIcon sx={{ fontSize: 15 }} />}>
-              Source
-            </ActionLink>
-          )}
-          {!project.liveLink && !project.githubLink && (
-            <Typography variant="caption" sx={{ color: 'text.secondary', opacity: 0.7 }}>
-              Private repository
+        {links.length > 0 ? (
+          <Box>
+            <Typography
+              variant="overline"
+              sx={{ color: 'text.secondary', opacity: 0.6, display: 'block', mb: 1.5, fontSize: '0.6rem' }}
+            >
+              {links.length > 1 ? `${links.length} deployments` : 'Deployment'}
             </Typography>
-          )}
-        </Stack>
+            <Stack direction="row" flexWrap="wrap" useFlexGap gap={1}>
+              {links.map((link) => (
+                <LinkChip key={link.href} link={link} project={project} />
+              ))}
+            </Stack>
+          </Box>
+        ) : (
+          <Typography variant="caption" sx={{ color: 'text.secondary', opacity: 0.6 }}>
+            Private repository — walkthrough available on request
+          </Typography>
+        )}
       </Box>
     </Box>
   );
@@ -225,10 +265,7 @@ FeaturedProject.propTypes = {
  * is one, so the hit target is generous.
  */
 export const ArchiveProject = ({ project }) => {
-  const links = [
-    project.liveLink && { key: 'live', href: project.liveLink, label: 'Live', icon: <NorthEastIcon sx={{ fontSize: 12 }} /> },
-    project.githubLink && { key: 'code', href: project.githubLink, label: 'Code', icon: <GitHubIcon sx={{ fontSize: 13 }} /> },
-  ].filter(Boolean);
+  const links = getLinks(project);
 
   return (
     <Box
@@ -337,39 +374,7 @@ export const ArchiveProject = ({ project }) => {
         }}
       >
         {links.length > 0 ? (
-          links.map((link) => (
-            <MuiLink
-              key={link.key}
-              href={link.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              underline="none"
-              aria-label={`${project.title} — ${link.label}`}
-              sx={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 0.6,
-                px: 1.25,
-                py: 0.5,
-                borderRadius: 999,
-                border: `1px solid ${tokens.hairline}`,
-                color: 'text.secondary',
-                fontFamily: '"JetBrains Mono", monospace',
-                fontSize: '0.68rem',
-                letterSpacing: '0.08em',
-                textTransform: 'uppercase',
-                transition: 'color 200ms, border-color 200ms, background-color 200ms',
-                '&:hover': {
-                  color: tokens.accent,
-                  borderColor: tokens.accent,
-                  bgcolor: tokens.accentSoft,
-                },
-              }}
-            >
-              {link.label}
-              {link.icon}
-            </MuiLink>
-          ))
+          links.map((link) => <LinkChip key={link.href} link={link} project={project} />)
         ) : (
           <Typography variant="caption" sx={{ color: 'text.secondary', opacity: 0.5 }}>
             Private repository

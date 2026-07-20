@@ -1,6 +1,13 @@
 /**
  * `featured` projects render as full-width editorial rows at the top of the
  * section; everything else falls through to the compact archive grid below.
+ *
+ * Multi-app projects list every deployment in `links`. Single-link projects
+ * can keep using `liveLink` / `githubLink` — ProjectCard normalises both
+ * shapes. `kind` drives the icon: 'live' | 'code' | 'docs'.
+ *
+ * Every URL here was checked for a 200 before being added — a dead link on a
+ * portfolio is worse than no link.
  */
 const projects = [
   {
@@ -12,7 +19,13 @@ const projects = [
       'A call-based ride-hailing and courier platform for Ghana. Riders hail a ride, nearby drivers claim it through an expanding-ring dispatch, and the fare is agreed on an in-app voice call — no phone numbers exchanged. Rider and driver ship as both Flutter apps and Next.js web apps over one shared fare engine, backed by an authoritative NestJS core with PostGIS matching and Redis, plus a Partner API that lets businesses push their own deliveries into the driver network.',
     tags: ['Flutter', 'Next.js', 'NestJS', 'PostGIS', 'Redis', 'WebRTC', 'Firebase'],
     image: '/images/dropping.png',
-    liveLink: 'https://dropping-client.vercel.app/',
+    links: [
+      { label: 'Rider app', href: 'https://dropping-rider-web.vercel.app/', kind: 'live' },
+      { label: 'Driver app', href: 'https://dropping-driver-web.vercel.app/', kind: 'live' },
+      { label: 'Rider (Flutter)', href: 'https://dropping-client.vercel.app/', kind: 'live' },
+      { label: 'Driver (Flutter)', href: 'https://dropping-driver.vercel.app/', kind: 'live' },
+      { label: 'API reference', href: 'https://dropping-core-api.onrender.com/docs', kind: 'docs' },
+    ],
   },
   {
     title: 'Campus Sell',
@@ -23,7 +36,13 @@ const projects = [
       'A marketplace where students and sellers run real storefronts. Personalized feed rails, Paystack checkout, order management, an integrated delivery system, buyer-to-seller voice calls, and an agentic shopping assistant that can search the catalogue, fill a basket and take you to checkout. Ships as a buyer client, a seller console and a native Flutter app over one headless Laravel commerce API.',
     tags: ['Next.js', 'Laravel', 'Flutter', 'Supabase', 'Redis', 'Paystack', 'Gemini'],
     image: '/images/campus-sell-logo-transparent.png',
-    liveLink: 'https://campus-sell-client.vercel.app/',
+    links: [
+      { label: 'Marketplace', href: 'https://campus-sell-client.vercel.app/', kind: 'live' },
+      { label: 'Seller console', href: 'https://campus-sell-seller.vercel.app/', kind: 'live' },
+      { label: 'Admin dashboard', href: 'https://campus-sell-admin.vercel.app/', kind: 'live' },
+      { label: 'Mobile app', href: 'https://campussell.github.io/', kind: 'live' },
+      { label: 'Mobile source', href: 'https://github.com/kaniobed28/campus_sell', kind: 'code' },
+    ],
   },
   {
     title: 'TapPay',
