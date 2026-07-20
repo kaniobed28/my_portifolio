@@ -1,47 +1,48 @@
 import React from 'react';
-import { Box, Typography, Container, Stack, IconButton } from '@mui/material';
-import { LinkedIn, GitHub, WhatsApp } from '@mui/icons-material';
+import { Box, Container, Typography, Stack, ButtonBase } from '@mui/material';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import { tokens } from '../theme';
 
-const Footer = () => {
-    return (
-        <Box
-            sx={{
-                bgcolor: 'background.paper',
-                py: 6,
-                borderTop: '1px solid rgba(255, 255, 255, 0.1)',
-            }}
+const Footer = () => (
+  <Box
+    component="footer"
+    sx={{ bgcolor: tokens.ink, borderTop: `1px solid ${tokens.hairline}`, py: 5 }}
+  >
+    <Container maxWidth="lg">
+      <Stack
+        direction={{ xs: 'column', sm: 'row' }}
+        spacing={2}
+        justifyContent="space-between"
+        alignItems={{ xs: 'flex-start', sm: 'center' }}
+      >
+        <Typography variant="caption" sx={{ color: 'text.secondary', opacity: 0.7 }}>
+          © {new Date().getFullYear()} Obed Kani — built with React & MUI
+        </Typography>
+
+        <ButtonBase
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          disableRipple
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 1,
+            color: 'text.secondary',
+            transition: 'color 200ms',
+            '&:hover': { color: 'text.primary' },
+            '&:hover .footer-arrow': { transform: 'translateY(-3px)' },
+          }}
         >
-            <Container maxWidth="lg">
-                <Stack
-                    direction={{ xs: 'column', md: 'row' }}
-                    spacing={4}
-                    justifyContent="space-between"
-                    alignItems="center"
-                >
-                    <Box sx={{ textAlign: { xs: 'center', md: 'left' } }}>
-                        <Typography variant="h6" sx={{ color: 'primary.main', fontWeight: 'bold' }}>
-                            Obed KANI
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                            © {new Date().getFullYear()} All rights reserved.
-                        </Typography>
-                    </Box>
-
-                    <Stack direction="row" spacing={2}>
-                        <IconButton href="https://www.linkedin.com/in/kani-obed" target="_blank" size="small" sx={{ color: 'text.secondary', '&:hover': { color: 'primary.main' } }}>
-                            <LinkedIn />
-                        </IconButton>
-                        <IconButton href="https://github.com/kaniobed28" target="_blank" size="small" sx={{ color: 'text.secondary', '&:hover': { color: 'primary.main' } }}>
-                            <GitHub />
-                        </IconButton>
-                        <IconButton href="https://wa.me/+233593626857" target="_blank" size="small" sx={{ color: 'text.secondary', '&:hover': { color: 'primary.main' } }}>
-                            <WhatsApp />
-                        </IconButton>
-                    </Stack>
-                </Stack>
-            </Container>
-        </Box>
-    );
-};
+          <Typography variant="overline" sx={{ fontSize: '0.65rem' }}>
+            Back to top
+          </Typography>
+          <ArrowUpwardIcon
+            className="footer-arrow"
+            sx={{ fontSize: 14, transition: 'transform 250ms' }}
+          />
+        </ButtonBase>
+      </Stack>
+    </Container>
+  </Box>
+);
 
 export default Footer;

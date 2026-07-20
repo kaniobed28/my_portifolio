@@ -1,195 +1,148 @@
 import React from 'react';
-import {
-  Box,
-  Typography,
-  Grid,
-  Button,
-  Container,
-} from '@mui/material';
-import PhoneIcon from '@mui/icons-material/Phone';
-import EmailIcon from '@mui/icons-material/Email';
+import { Box, Container, Typography, Stack, Link as MuiLink } from '@mui/material';
+import { motion } from 'framer-motion';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import YouTubeIcon from '@mui/icons-material/YouTube';
-import { motion } from 'framer-motion';
+import NorthEastIcon from '@mui/icons-material/NorthEast';
+import PropTypes from 'prop-types';
+import { tokens } from '../../theme';
 
-const ContactMe = () => {
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.3,
-      },
-    },
-  };
+const channels = [
+  { label: 'Email', value: 'kaniobed28@gmail.com', href: 'mailto:kaniobed28@gmail.com' },
+  { label: 'Phone', value: '+33 7 53 38 41 84', href: 'tel:+33753384184' },
+];
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.2 } },
-  };
+const socials = [
+  { label: 'GitHub', href: 'https://github.com/kaniobed28', icon: <GitHubIcon sx={{ fontSize: 18 }} /> },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/kani-obed', icon: <LinkedInIcon sx={{ fontSize: 18 }} /> },
+  { label: 'WhatsApp', href: 'https://wa.me/233593626857', icon: <WhatsAppIcon sx={{ fontSize: 18 }} /> },
+  { label: 'YouTube', href: 'https://www.youtube.com/@kaniobed28', icon: <YouTubeIcon sx={{ fontSize: 18 }} /> },
+];
 
-  return (
-    <Box
+const ChannelRow = ({ channel }) => (
+  <MuiLink
+    href={channel.href}
+    underline="none"
+    sx={{
+      display: 'flex',
+      alignItems: 'baseline',
+      justifyContent: 'space-between',
+      gap: 2,
+      py: 3,
+      borderTop: `1px solid ${tokens.hairline}`,
+      transition: 'border-color 250ms',
+      '&:hover': { borderColor: tokens.hairlineStrong },
+      '&:hover .channel-value': { color: tokens.accent },
+    }}
+  >
+    <Typography variant="overline" sx={{ color: 'text.secondary', flexShrink: 0 }}>
+      {channel.label}
+    </Typography>
+    <Typography
+      className="channel-value"
       sx={{
-        py: 12,
-        backgroundColor: 'background.default',
-        position: 'relative',
-        overflow: 'hidden',
+        fontFamily: '"Instrument Serif", Georgia, serif',
+        fontSize: { xs: '1.35rem', md: '1.9rem' },
+        color: 'text.primary',
+        transition: 'color 250ms',
+        textAlign: 'right',
+        wordBreak: 'break-word',
       }}
     >
-      {/* Background Gradient */}
+      {channel.value}
+    </Typography>
+  </MuiLink>
+);
+
+ChannelRow.propTypes = { channel: PropTypes.object.isRequired };
+
+const ContactMe = () => (
+  <Box component="section" sx={{ position: 'relative', py: { xs: 10, md: 16 }, bgcolor: tokens.ink, overflow: 'hidden' }}>
+    <Box
+      className="accent-bloom"
+      sx={{ position: 'absolute', inset: 0, transform: 'scaleX(-1)', opacity: 0.8 }}
+    />
+
+    <Container maxWidth="lg" sx={{ position: 'relative' }}>
+      <Box sx={{ display: 'flex', alignItems: 'baseline', gap: 3, mb: 3 }}>
+        <Typography variant="overline" sx={{ color: tokens.accent, flexShrink: 0 }}>
+          Contact
+        </Typography>
+        <Box sx={{ flexGrow: 1, height: '1px', bgcolor: tokens.hairline }} />
+      </Box>
+
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-80px' }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+      >
+        <Typography
+          variant="h2"
+          sx={{ fontSize: { xs: '2.75rem', md: '4.5rem' }, color: 'text.primary', maxWidth: '14ch', mb: 3 }}
+        >
+          Let’s build something.
+        </Typography>
+        <Typography variant="body1" sx={{ color: 'text.secondary', maxWidth: '46ch', mb: { xs: 6, md: 8 } }}>
+          Open to engineering roles and freelance work. The fastest way to reach
+          me is email — I answer everything.
+        </Typography>
+      </motion.div>
+
       <Box
         sx={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          height: '100%',
-          background: 'linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0, 230, 118, 0.05) 100%)',
-          pointerEvents: 'none'
+          display: 'grid',
+          gridTemplateColumns: { xs: '1fr', md: '1.4fr 1fr' },
+          gap: { xs: 6, md: 10 },
+          alignItems: 'start',
         }}
-      />
+      >
+        <Box>
+          {channels.map((channel) => (
+            <ChannelRow key={channel.label} channel={channel} />
+          ))}
+        </Box>
 
-      <Container maxWidth="md" sx={{ position: 'relative', zIndex: 1 }}>
-        {/* Title with animation */}
-        <motion.div
-          initial={{ opacity: 0, y: -50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.2 }}
-        >
-          <Typography
-            variant="h2"
-            sx={{
-              fontWeight: 700,
-              textAlign: 'center',
-              mb: 8,
-              background: (theme) => `linear-gradient(45deg, #fff 30%, ${theme.palette.primary.main} 90%)`,
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              fontSize: { xs: '2.5rem', md: '3.5rem' },
-            }}
-          >
-            Get In Touch
+        <Box>
+          <Typography variant="overline" sx={{ color: 'text.secondary', display: 'block', mb: 2.5 }}>
+            Elsewhere
           </Typography>
-        </motion.div>
-
-        {/* Contact Information Section */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: false }}
-        >
-          <Box
-            sx={{
-              background: 'rgba(255, 255, 255, 0.05)',
-              backdropFilter: 'blur(10px)',
-              borderRadius: 4,
-              p: { xs: 4, md: 8 },
-              border: '1px solid rgba(255, 255, 255, 0.1)',
-            }}
-          >
-            <Grid container spacing={6} justifyContent="center">
-              <Grid item xs={12} md={6}>
-                {/* Contact Details */}
-                <motion.div variants={itemVariants}>
-                  <Typography variant="h5" sx={{ fontWeight: 600, mb: 4, color: 'text.primary', textTransform: 'uppercase', letterSpacing: 1 }}>
-                    Reach Me At:
-                  </Typography>
-                </motion.div>
-
-                <motion.div variants={itemVariants}>
-                  <Box sx={{ display: 'flex', alignItems: 'center', mb: 4 }}>
-                    <PhoneIcon sx={{ mr: 2, color: 'primary.main', fontSize: '2rem' }} />
-                    <Typography variant="body1" sx={{ color: 'text.secondary', fontSize: '1.2rem' }}>
-                      +33 7 53 38 41 84
-                    </Typography>
-                  </Box>
-                </motion.div>
-
-                <motion.div variants={itemVariants}>
-                  <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
-                    <EmailIcon sx={{ mr: 2, color: 'primary.main', fontSize: '2rem' }} />
-                    <Typography variant="body1" sx={{ color: 'text.secondary', fontSize: '1.2rem' }}>
-                      kaniobed28@gmail.com
-                    </Typography>
-                  </Box>
-                </motion.div>
-              </Grid>
-
-              <Grid item xs={12} md={6}>
-                <motion.div variants={itemVariants}>
-                  <Typography variant="h5" sx={{ fontWeight: 600, mb: 4, color: 'text.primary', textTransform: 'uppercase', letterSpacing: 1 }}>
-                    Follow Me:
-                  </Typography>
-                </motion.div>
-
-                <motion.div variants={containerVariants}>
-                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                    <motion.div variants={itemVariants}>
-                      <Button
-                        variant="outlined"
-                        fullWidth
-                        startIcon={<GitHubIcon />}
-                        href="https://github.com/kaniobed28"
-                        target="_blank"
-                        sx={{ py: 1.5, justifyContent: 'flex-start', px: 4, borderColor: 'rgba(255,255,255,0.2)', color: 'text.primary', '&:hover': { borderColor: 'primary.main', bgcolor: 'rgba(0,230,118,0.1)' } }}
-                      >
-                        GitHub
-                      </Button>
-                    </motion.div>
-
-                    <motion.div variants={itemVariants}>
-                      <Button
-                        variant="outlined"
-                        fullWidth
-                        startIcon={<LinkedInIcon />}
-                        href="https://www.linkedin.com/in/kani-obed"
-                        target="_blank"
-                        sx={{ py: 1.5, justifyContent: 'flex-start', px: 4, borderColor: 'rgba(255,255,255,0.2)', color: 'text.primary', '&:hover': { borderColor: '#0077b5', bgcolor: 'rgba(0,119,181,0.1)' } }}
-                      >
-                        LinkedIn
-                      </Button>
-                    </motion.div>
-
-                    <motion.div variants={itemVariants}>
-                      <Button
-                        variant="outlined"
-                        fullWidth
-                        startIcon={<WhatsAppIcon />}
-                        href="https://wa.me/233593626857"
-                        target="_blank"
-                        sx={{ py: 1.5, justifyContent: 'flex-start', px: 4, borderColor: 'rgba(255,255,255,0.2)', color: 'text.primary', '&:hover': { borderColor: '#25D366', bgcolor: 'rgba(37,211,102,0.1)' } }}
-                      >
-                        WhatsApp
-                      </Button>
-                    </motion.div>
-
-                    <motion.div variants={itemVariants}>
-                      <Button
-                        variant="outlined"
-                        fullWidth
-                        startIcon={<YouTubeIcon />}
-                        href="https://www.youtube.com/@kaniobed28"
-                        target="_blank"
-                        sx={{ py: 1.5, justifyContent: 'flex-start', px: 4, borderColor: 'rgba(255,255,255,0.2)', color: 'text.primary', '&:hover': { borderColor: '#FF0000', bgcolor: 'rgba(255,0,0,0.1)' } }}
-                      >
-                        YouTube
-                      </Button>
-                    </motion.div>
-                  </Box>
-                </motion.div>
-              </Grid>
-            </Grid>
-          </Box>
-        </motion.div>
-      </Container>
-    </Box>
-  );
-};
+          <Stack spacing={0}>
+            {socials.map((s, i) => (
+              <MuiLink
+                key={s.label}
+                href={s.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                underline="none"
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 1.5,
+                  py: 1.75,
+                  color: 'text.secondary',
+                  borderTop: i === 0 ? `1px solid ${tokens.hairline}` : 'none',
+                  borderBottom: `1px solid ${tokens.hairline}`,
+                  transition: 'color 200ms, padding-left 200ms',
+                  '&:hover': { color: 'text.primary', pl: 1 },
+                  '&:hover .social-arrow': { opacity: 1 },
+                }}
+              >
+                {s.icon}
+                <Typography sx={{ fontSize: '0.95rem', flexGrow: 1 }}>{s.label}</Typography>
+                <NorthEastIcon
+                  className="social-arrow"
+                  sx={{ fontSize: 13, opacity: 0, transition: 'opacity 200ms', color: tokens.accent }}
+                />
+              </MuiLink>
+            ))}
+          </Stack>
+        </Box>
+      </Box>
+    </Container>
+  </Box>
+);
 
 export default ContactMe;

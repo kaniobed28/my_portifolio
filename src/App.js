@@ -1,9 +1,11 @@
 import './App.css';
 import { useRef } from 'react';
-import { ThemeProvider, CssBaseline } from '@mui/material';
+import { ThemeProvider, CssBaseline, Box } from '@mui/material';
 import theme from './theme';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import ScrollProgress from './components/ScrollProgress';
+import StackTicker from './components/StackTicker';
 import ContactMe from './ContactMe/views/ContactMe';
 import HomeBanner from './HomeBanner/views/HomeBanner';
 import MyWorks from './Projects/views/Projects';
@@ -16,48 +18,46 @@ function App() {
   const achievementsRef = useRef(null);
 
   const scrollToSection = (ref) => {
-    ref.current?.scrollIntoView({ behavior: 'smooth' });
+    ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   const handleNavClick = (section) => {
-    switch (section) {
-      case 'home':
-        scrollToSection(homeRef);
-        break;
-      case 'projects':
-        scrollToSection(myWorksRef);
-        break;
-      case 'achievements':
-        scrollToSection(achievementsRef);
-        break;
-      case 'contact':
-        scrollToSection(contactMeRef);
-        break;
-      default:
-        break;
-    }
+    const targets = {
+      home: homeRef,
+      projects: myWorksRef,
+      achievements: achievementsRef,
+      contact: contactMeRef,
+    };
+    const target = targets[section];
+    if (target) scrollToSection(target);
   };
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <a className="skip-link" href="#projects">
+        Skip to work
+      </a>
+      <ScrollProgress />
       <Navbar onScrollToSection={handleNavClick} />
-      <div ref={homeRef}>
-        <HomeBanner
-          onMyWorksClick={() => scrollToSection(myWorksRef)}
-          onContactMeClick={() => scrollToSection(contactMeRef)}
-          onAchievementsClick={() => scrollToSection(achievementsRef)}
-        />
-      </div>
-      <div ref={myWorksRef}>
-        <MyWorks />
-      </div>
-      <div ref={achievementsRef}>
-        <AchievementsAndCertificates />
-      </div>
-      <div ref={contactMeRef}>
-        <ContactMe />
-      </div>
+      <div className="grain" aria-hidden />
+
+      <Box component="main">
+        <Box ref={homeRef} id="home">
+          <HomeBanner onMyWorksClick={() => scrollToSection(myWorksRef)} />
+        </Box>
+        <StackTicker />
+        <Box ref={myWorksRef} id="projects" sx={{ scrollMarginTop: '76px' }}>
+          <MyWorks />
+        </Box>
+        <Box ref={achievementsRef} id="achievements" sx={{ scrollMarginTop: '76px' }}>
+          <AchievementsAndCertificates />
+        </Box>
+        <Box ref={contactMeRef} id="contact" sx={{ scrollMarginTop: '76px' }}>
+          <ContactMe />
+        </Box>
+      </Box>
+
       <Footer />
     </ThemeProvider>
   );

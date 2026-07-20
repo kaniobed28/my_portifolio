@@ -1,150 +1,99 @@
 import React from 'react';
-import {
-    Dialog,
-    DialogContent,
-    Typography,
-    Box,
-    Divider,
-    Avatar,
-} from '@mui/material';
-import { motion } from 'framer-motion';
-import EmailIcon from '@mui/icons-material/Email';
-import PhoneIcon from '@mui/icons-material/Phone';
+import { Dialog, Box, Typography, Stack, IconButton, Divider } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+import PropTypes from 'prop-types';
+import { tokens } from '../../theme';
 
-const AboutMeDialog = ({ open, onClose }) => {
-    const knowledge = [
-        { title: 'Web Development', details: 'React, Angular, Flask and Django' },
-        {
-            title: 'Mobile Development',
-            details: 'Flutter with Firebase integration and GetX/MobX for state management',
-        },
-        {
-            title: 'Machine Learning',
-            details: 'Skilled in machine learning techniques including model development, data preprocessing, and using frameworks like PyTorch and TensorFlow for building and training models. Experienced with data manipulation and analysis using Pandas, and familiar with other ML tools and libraries for tasks such as regression, classification, and clustering.',
-        },
-        {
-            title: 'Computer Vision',
-            details: 'Experienced in developing innovative solutions using OpenCV and other CV libraries for real-world challenges. Proficient in image processing, object detection, and building applications with computer vision techniques.',
-        },
-        { title: 'Personal Interests', details: 'Playing keyboard and drums' },
-    ];
+const capabilities = [
+  {
+    title: 'Frontend',
+    details: 'React and Next.js, Material UI and Tailwind, with an eye for typography and motion that stays out of the way.',
+  },
+  {
+    title: 'Mobile',
+    details: 'Flutter apps shipped to production — Firebase and Supabase auth, offline-tolerant state, WebRTC voice calling, NFC and QR flows, Paystack checkout and signed release builds.',
+  },
+  {
+    title: 'Backend',
+    details: 'Laravel, NestJS, Django and Flask. REST APIs with tenancy, API keys and webhooks; background jobs and queues.',
+  },
+  {
+    title: 'Data & infrastructure',
+    details: 'PostgreSQL and PostGIS, Redis caching and queues, Firebase Realtime Database and Firestore. Deployed on Render, Vercel and Supabase.',
+  },
+  {
+    title: 'Machine learning',
+    details: 'Model development and data preprocessing with PyTorch, TensorFlow and Pandas; computer vision with OpenCV for image processing and object detection.',
+  },
+  {
+    title: 'Away from the keyboard',
+    details: 'Keyboard and drums.',
+  },
+];
 
-    return (
-        <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
-            <DialogContent
-                sx={{
-                    p: 4,
-                    background: 'linear-gradient(to bottom right, #4caf50, #81c784)',
-                    color: '#fff',
-                    borderRadius: '8px',
-                    textAlign: 'center',
-                }}
-            >
-                {/* Avatar Section */}
-                <Box
-                    sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        mb: 3,
-                    }}
-                >
-                    <Avatar
-                        alt="Kani Obed"
-                        src="/images/avatar.png"
-                        sx={{
-                            width: 100,
-                            height: 100,
-                            mb: 2,
-                            boxShadow: 3,
-                            border: '3px solid #fff',
-                        }}
-                    />
-                    <Typography
-                        variant="h5"
-                        fontWeight="bold"
-                        component={motion.div}
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.8 }}
-                        sx={{ mb: 1 }}
-                    >
-                        Hi, I'm Kani Obed
-                    </Typography>
-                    <Typography variant="body2" fontStyle="italic">
-                        A versatile software developer
-                    </Typography>
-                </Box>
+const AboutMeDialog = ({ open, onClose }) => (
+  <Dialog
+    open={open}
+    onClose={onClose}
+    maxWidth="sm"
+    fullWidth
+    PaperProps={{
+      sx: {
+        bgcolor: tokens.raised,
+        border: `1px solid ${tokens.hairline}`,
+        backgroundImage: 'none',
+        borderRadius: 1,
+      },
+    }}
+  >
+    <Box sx={{ p: { xs: 3, md: 5 } }}>
+      <Stack direction="row" justifyContent="space-between" alignItems="flex-start" sx={{ mb: 3 }}>
+        <Box>
+          <Typography variant="overline" sx={{ color: tokens.accent }}>
+            About
+          </Typography>
+          <Typography variant="h4" sx={{ fontSize: { xs: '2rem', md: '2.5rem' }, mt: 1.5 }}>
+            Obed Kani
+          </Typography>
+        </Box>
+        <IconButton aria-label="Close" onClick={onClose} sx={{ color: 'text.secondary' }}>
+          <CloseIcon />
+        </IconButton>
+      </Stack>
 
-                {/* Divider */}
-                <Divider sx={{ mb: 3, borderColor: 'rgba(255, 255, 255, 0.5)' }} />
+      <Typography variant="body1" sx={{ color: 'text.secondary', mb: 4 }}>
+        A software engineer who prefers owning a product end to end — the app,
+        the API, the data model and the deploy — rather than a single slice of it.
+      </Typography>
 
-                {/* Knowledge Section */}
-                {knowledge.map((item, index) => (
-                    <Typography
-                        key={index}
-                        variant="body2"
-                        paragraph
-                        sx={{ ml: 2, fontSize: '1rem', lineHeight: 1.7 }}
-                        component={motion.div}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.4, delay: index * 0.2 }}
-                    >
-                        <strong>{item.title}:</strong> {item.details}
-                    </Typography>
-                ))}
+      <Divider sx={{ borderColor: tokens.hairline, mb: 1 }} />
 
-                {/* Divider */}
-                <Divider sx={{ my: 3, borderColor: 'rgba(255, 255, 255, 0.5)' }} />
+      {capabilities.map((item) => (
+        <Box
+          key={item.title}
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: { xs: '1fr', sm: '150px 1fr' },
+            gap: { xs: 0.75, sm: 3 },
+            py: 2.5,
+            borderBottom: `1px solid ${tokens.hairline}`,
+          }}
+        >
+          <Typography variant="overline" sx={{ color: 'text.secondary', pt: 0.4 }}>
+            {item.title}
+          </Typography>
+          <Typography variant="body2" sx={{ color: 'text.primary', fontSize: '0.9rem' }}>
+            {item.details}
+          </Typography>
+        </Box>
+      ))}
+    </Box>
+  </Dialog>
+);
 
-                {/* Contact Information */}
-                <Box
-                    component={motion.div}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.6, delay: 0.5 }}
-                >
-                    <Typography variant="h6" fontWeight="bold" gutterBottom>
-                        Contact Me
-                    </Typography>
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            gap: 2,
-                            mb: 1,
-                        }}
-                    >
-                        <EmailIcon />
-                        <Typography
-                            variant="body2"
-                            sx={{ fontSize: '1rem', fontStyle: 'italic' }}
-                        >
-                            <strong>Email:</strong> kaniobed28@gmail.com
-                        </Typography>
-                    </Box>
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            gap: 2,
-                        }}
-                    >
-                        <PhoneIcon />
-                        <Typography
-                            variant="body2"
-                            sx={{ fontSize: '1rem', fontStyle: 'italic' }}
-                        >
-                            <strong>Phone:</strong> +33 753384184
-                        </Typography>
-                    </Box>
-                </Box>
-            </DialogContent>
-        </Dialog>
-    );
+AboutMeDialog.propTypes = {
+  open: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 
 export default AboutMeDialog;
