@@ -13,10 +13,17 @@ import PhoneIcon from '@mui/icons-material/Phone';
 
 const AboutMeDialog = ({ open, onClose }) => {
     const knowledge = [
-        { title: 'Web Development', details: 'React, Angular, Flask and Django' },
+        {
+            title: 'Web Development',
+            details: 'React and Next.js on the front end; Laravel, NestJS, Django and Flask on the back end, with Tailwind and Material UI for interfaces.',
+        },
         {
             title: 'Mobile Development',
-            details: 'Flutter with Firebase integration and GetX/MobX for state management',
+            details: 'Flutter apps shipped to production — Firebase and Supabase auth, offline-tolerant state, WebRTC voice calling, NFC and QR flows, Paystack checkout and signed release builds.',
+        },
+        {
+            title: 'Backend & Infrastructure',
+            details: 'PostgreSQL/PostGIS, Redis queues and caching, Firebase Realtime Database and Firestore, REST APIs with tenancy and API keys. Deployed on Render, Vercel and Supabase.',
         },
         {
             title: 'Machine Learning',

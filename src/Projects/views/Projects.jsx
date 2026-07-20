@@ -5,18 +5,31 @@ import ProjectCard from './ProjectCard';
 
 const projects = [
   {
-    title: 'Campus Sell (Flutter)',
-    description: 'An online marketplace for student to enhance buy and sell on Campus. Users can post ads, manage offers, and chat securely with potential buyers.',
-    image: '/images/campus-sell-logo-transparent.png',
-    liveLink: 'https://campussell.github.io/',
-    githubLink: 'https://github.com/kaniobed28/campus_sell',
+    title: 'Dropping — Ride & Delivery Platform (Flutter · Next.js · NestJS)',
+    description:
+      'A call-based ride-hailing and courier platform for Ghana. Riders hail a ride, nearby drivers claim it through an expanding-ring dispatch, and fare is agreed on an in-app WebRTC voice call — no phone numbers exchanged. Backed by an authoritative NestJS + PostGIS + Redis core API with Firebase for realtime, plus a Partner API that lets businesses dispatch their own deliveries into the driver network. Rider and driver both ship as Flutter apps and Next.js web apps sharing one fare engine.',
+    image: '/images/dropping.png',
+    liveLink: 'https://dropping-client.vercel.app/',
   },
   {
-    title: 'Campus Sell (Next.js)',
-    description: 'An online marketplace for student to enhance buy and sell  on Campus. Users can post ads, manage offers, and chat securely with potential buyers.',
+    title: 'Campus Sell — Marketplace Platform (Next.js · Laravel · Flutter)',
+    description:
+      'A multi-vendor marketplace where students and sellers run real storefronts. Personalized feed rails, Paystack checkout, order management, an integrated delivery system, buyer-to-seller voice calls and a Gemini-powered shopping assistant that can search, fill a basket and take you to checkout. Ships as a buyer web client, a seller console and a native Flutter app over one headless Laravel commerce API.',
     image: '/images/campus-sell-logo-transparent.png',
-    liveLink: 'https://campussell.vercel.app/',
-    githubLink: 'https://github.com/kaniobed28/campus-sell-next-js',
+    liveLink: 'https://campus-sell-client.vercel.app/',
+  },
+  {
+    title: 'TapPay (Flutter · NestJS)',
+    description:
+      'A contactless peer-to-peer payments platform. Two phones tap over NFC or scan a QR code to open a cryptographically signed payment session, and money settles through Paystack — no card credentials ever pass between devices. NestJS + Prisma + Postgres backend with a swappable payment provider.',
+    image: '/images/tappay.png',
+    liveLink: 'https://tappay-nine.vercel.app/',
+  },
+  {
+    title: 'Ghana Room Finder (React · Firebase)',
+    description:
+      'A rental marketplace for rooms and apartments in Ghana. Tenants search and filter listings by location and budget, landlords post and manage properties with photo uploads, and admins moderate — built on Firestore, Firebase Auth and Storage with a NestJS backend in progress.',
+    image: '/images/ghana-room-finder.svg',
   },
   {
     title: 'Memory FlashCard (React.js)',
@@ -36,7 +49,7 @@ const projects = [
     description: 'A platform I am building for the COP-Lille assembly, providing tools and resources for effective event management and everything for services.',
     image: 'images/logo-cop (1).gif',
     githubLink: 'https://github.com/kaniobed28/cop-lille',
-    liveLink: 'https://cop-lille.netlify.app/',
+    liveLink: 'https://lille-city-church.vercel.app/',
   },
   {
     title: 'Quizz Mast (React.js)',
