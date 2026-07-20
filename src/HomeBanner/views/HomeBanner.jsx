@@ -1,182 +1,197 @@
 import React, { useState } from 'react';
-import { Box, Typography, Button, Container, Stack, IconButton, useTheme } from '@mui/material';
+import { Box, Typography, Button, Container, Stack, IconButton } from '@mui/material';
 import { motion } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
 import { LinkedIn, GitHub, WhatsApp } from '@mui/icons-material';
 import AboutMeDialog from './AboutMeDialog';
+import { tokens } from '../../theme';
 
-const HomeBanner = ({ onMyWorksClick, onContactMeClick, onAchievementsClick }) => {
-  const theme = useTheme();
-  const { ref: titleRef, inView: titleInView } = useInView({ triggerOnce: true });
-  const { ref: buttonsRef, inView: buttonsInView } = useInView({ triggerOnce: true });
+const rise = {
+  hidden: { opacity: 0, y: 24 },
+  visible: (i = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.8, delay: 0.1 + i * 0.1, ease: [0.22, 1, 0.36, 1] },
+  }),
+};
+
+const socials = [
+  { href: 'https://www.linkedin.com/in/kani-obed', icon: <LinkedIn fontSize="small" />, label: 'LinkedIn' },
+  { href: 'https://github.com/kaniobed28', icon: <GitHub fontSize="small" />, label: 'GitHub' },
+  { href: 'https://wa.me/+233593626857', icon: <WhatsApp fontSize="small" />, label: 'WhatsApp' },
+];
+
+const HomeBanner = ({ onMyWorksClick }) => {
   const [isAboutMeOpen, setIsAboutMeOpen] = useState(false);
-
-  const handleOpenAboutMe = () => setIsAboutMeOpen(true);
-  const handleCloseAboutMe = () => setIsAboutMeOpen(false);
 
   return (
     <>
       <Box
+        component="header"
         sx={{
           position: 'relative',
           display: 'flex',
           alignItems: 'center',
-          minHeight: '100vh',
-          background: `url(/images/backg.avif)`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundAttachment: 'fixed', // Parallax effect
+          minHeight: '100svh',
+          bgcolor: tokens.ink,
           overflow: 'hidden',
-          '::before': {
-            content: '""',
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            background: `linear-gradient(90deg, ${theme.palette.background.default} 0%, rgba(18, 18, 18, 0.8) 50%, rgba(18, 18, 18, 0.4) 100%)`,
-            zIndex: 1,
-          }
         }}
       >
-        <Container
-          maxWidth="lg"
+        {/* Texture layers: dot grid, warm bloom, and a vignette to settle the edges. */}
+        <Box className="grid-field" sx={{ position: 'absolute', inset: 0, opacity: 0.5 }} />
+        <Box className="accent-bloom" sx={{ position: 'absolute', inset: 0 }} />
+        <Box
           sx={{
-            position: 'relative',
-            zIndex: 2,
-            pt: { xs: 8, md: 0 },
-            textAlign: { xs: 'center', md: 'left' } // Center on mobile, left on desktop
+            position: 'absolute',
+            inset: 0,
+            background: `radial-gradient(120% 90% at 50% 40%, transparent 40%, ${tokens.ink} 100%)`,
           }}
-        >
-          <motion.div
-            ref={titleRef}
-            initial={{ opacity: 0, x: -50 }}
-            animate={titleInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
-            transition={{ duration: 0.8 }}
-          >
-            <Typography
-              variant="h6"
-              sx={{
-                color: 'primary.main',
-                fontWeight: 600,
-                letterSpacing: '2px',
-                textTransform: 'uppercase',
-                mb: 2,
-                display: 'block'
-              }}
-            >
-              Software Engineer
-            </Typography>
+        />
 
+        <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1, py: { xs: 14, md: 10 } }}>
+          <motion.div initial="hidden" animate="visible" custom={0} variants={rise}>
+            <Stack
+              direction="row"
+              alignItems="center"
+              flexWrap="wrap"
+              useFlexGap
+              gap={2}
+              sx={{ mb: { xs: 4, md: 5 } }}
+            >
+              <Stack direction="row" alignItems="center" spacing={2}>
+                <Box sx={{ width: 32, height: '1px', bgcolor: tokens.accent }} />
+                <Typography variant="overline" sx={{ color: tokens.accent }}>
+                  Software Engineer
+                </Typography>
+              </Stack>
+
+              {/* Availability pill — a live pulse reads as "currently true". */}
+              <Stack
+                direction="row"
+                alignItems="center"
+                spacing={1}
+                sx={{
+                  px: 1.5,
+                  py: 0.6,
+                  borderRadius: 999,
+                  border: `1px solid ${tokens.hairline}`,
+                  bgcolor: 'rgba(255, 255, 255, 0.02)',
+                }}
+              >
+                <Box sx={{ position: 'relative', display: 'flex', width: 6, height: 6 }}>
+                  <Box
+                    component={motion.span}
+                    animate={{ scale: [1, 2.4, 1], opacity: [0.7, 0, 0.7] }}
+                    transition={{ duration: 2.4, repeat: Infinity, ease: 'easeOut' }}
+                    sx={{ position: 'absolute', inset: 0, borderRadius: '50%', bgcolor: '#4ADE80' }}
+                  />
+                  <Box sx={{ width: 6, height: 6, borderRadius: '50%', bgcolor: '#4ADE80' }} />
+                </Box>
+                <Typography variant="overline" sx={{ color: 'text.secondary', fontSize: '0.62rem' }}>
+                  Open to work
+                </Typography>
+              </Stack>
+            </Stack>
+          </motion.div>
+
+          <motion.div initial="hidden" animate="visible" custom={1} variants={rise}>
             <Typography
               variant="h1"
               sx={{
-                fontSize: { xs: '3.5rem', md: '5.5rem' },
-                fontWeight: 800,
-                lineHeight: 1.1,
-                mb: 2,
-                color: '#fff',
-                textShadow: '2px 2px 4px rgba(0,0,0,0.3)'
+                fontSize: { xs: '4.25rem', sm: '6rem', md: '8.5rem' },
+                color: 'text.primary',
+                mb: { xs: 3, md: 4 },
               }}
             >
-              Hi, I'm <br />
-              <Typography component="span" variant="inherit" sx={{ color: 'primary.main' }}>
-                Obed KANI
-              </Typography>
+              Obed Kani
             </Typography>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={titleInView ? { opacity: 1 } : { opacity: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-          >
+          <motion.div initial="hidden" animate="visible" custom={2} variants={rise}>
             <Typography
-              variant="h5"
+              variant="body1"
               sx={{
-                mb: 6,
                 color: 'text.secondary',
-                fontWeight: 400,
-                maxWidth: { xs: '100%', md: '600px' },
-                fontSize: { xs: '1.2rem', md: '1.5rem' },
-                lineHeight: 1.6
+                fontSize: { xs: '1.05rem', md: '1.3rem' },
+                maxWidth: '46ch',
+                mb: { xs: 5, md: 7 },
               }}
             >
-              Crafting bespoke digital solutions. I build accessible, pixel-perfect, and performant web applications.
+              I build production platforms end to end — ride-hailing dispatch,
+              contactless payments and multi-vendor commerce — from the mobile app
+              down to the API and the database.
             </Typography>
           </motion.div>
 
-          <motion.div
-            ref={buttonsRef}
-            initial={{ opacity: 0, y: 30 }}
-            animate={buttonsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-          >
-            <Stack
-              direction={{ xs: 'column', sm: 'row' }}
-              spacing={2}
-              alignItems={{ xs: 'center', md: 'flex-start' }}
-            >
-              <Button
-                variant="contained"
-                size="large"
-                onClick={onMyWorksClick}
-                sx={{
-                  px: 4,
-                  py: 1.5,
-                  fontSize: '1.1rem',
-                  borderRadius: '50px',
-                  boxShadow: '0 4px 14px 0 rgba(0, 230, 118, 0.39)',
-                }}
-              >
-                View Projects
+          <motion.div initial="hidden" animate="visible" custom={3} variants={rise}>
+            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} sx={{ mb: { xs: 6, md: 8 } }}>
+              <Button variant="contained" size="large" onClick={onMyWorksClick} sx={{ py: 1.4 }}>
+                View selected work
               </Button>
               <Button
                 variant="outlined"
                 size="large"
-                onClick={handleOpenAboutMe}
-                sx={{
-                  px: 4,
-                  py: 1.5,
-                  fontSize: '1.1rem',
-                  borderRadius: '50px',
-                  borderWidth: '2px',
-                  color: '#fff',
-                  borderColor: 'rgba(255,255,255,0.5)',
-                  ':hover': {
-                    borderColor: '#fff',
-                    bgcolor: 'rgba(255,255,255,0.1)'
-                  },
-                }}
+                onClick={() => setIsAboutMeOpen(true)}
+                sx={{ py: 1.4 }}
               >
-                About Me
+                About me
               </Button>
             </Stack>
+          </motion.div>
 
-            {/* Social Media Icons */}
-            <Stack
-              direction="row"
-              spacing={2}
-              sx={{ mt: 6, justifyContent: { xs: 'center', md: 'flex-start' } }}
-            >
-              <IconButton href="https://www.linkedin.com/in/kani-obed" target="_blank" sx={{ color: 'rgba(255,255,255,0.7)', '&:hover': { color: 'primary.main', transform: 'translateY(-3px)' }, transition: 'all 0.3s' }}>
-                <LinkedIn fontSize="large" />
-              </IconButton>
-              <IconButton href="https://github.com/kaniobed28" target="_blank" sx={{ color: 'rgba(255,255,255,0.7)', '&:hover': { color: 'primary.main', transform: 'translateY(-3px)' }, transition: 'all 0.3s' }}>
-                <GitHub fontSize="large" />
-              </IconButton>
-              <IconButton href="https://wa.me/+233593626857" target="_blank" sx={{ color: 'rgba(255,255,255,0.7)', '&:hover': { color: 'primary.main', transform: 'translateY(-3px)' }, transition: 'all 0.3s' }}>
-                <WhatsApp fontSize="large" />
-              </IconButton>
+          <motion.div initial="hidden" animate="visible" custom={4} variants={rise}>
+            <Stack direction="row" spacing={1} sx={{ ml: -1 }}>
+              {socials.map((s) => (
+                <IconButton
+                  key={s.label}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={s.label}
+                  sx={{
+                    color: 'text.secondary',
+                    transition: 'color 200ms',
+                    '&:hover': { color: 'text.primary', bgcolor: 'transparent' },
+                  }}
+                >
+                  {s.icon}
+                </IconButton>
+              ))}
             </Stack>
           </motion.div>
         </Container>
+
+        {/* Scroll cue */}
+        <Box
+          component={motion.div}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.4, duration: 0.8 }}
+          sx={{
+            position: 'absolute',
+            bottom: 32,
+            left: '50%',
+            transform: 'translateX(-50%)',
+            display: { xs: 'none', md: 'flex' },
+            alignItems: 'center',
+            gap: 1.5,
+            zIndex: 1,
+          }}
+        >
+          <Typography variant="overline" sx={{ color: 'text.secondary', fontSize: '0.62rem' }}>
+            Scroll
+          </Typography>
+          <Box
+            component={motion.div}
+            animate={{ scaleY: [0.3, 1, 0.3], originY: 0 }}
+            transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
+            sx={{ width: '1px', height: 40, bgcolor: tokens.hairlineStrong }}
+          />
+        </Box>
       </Box>
 
-      <AboutMeDialog open={isAboutMeOpen} onClose={handleCloseAboutMe} />
+      <AboutMeDialog open={isAboutMeOpen} onClose={() => setIsAboutMeOpen(false)} />
     </>
   );
 };
 
 export default HomeBanner;
-

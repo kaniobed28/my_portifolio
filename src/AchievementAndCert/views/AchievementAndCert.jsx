@@ -1,257 +1,219 @@
 import React, { useState } from 'react';
 import {
   Box,
-  Card,
-  CardContent,
-  CardMedia,
-  Typography,
-  Grid,
-  Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
   Container,
+  Typography,
+  Stack,
+  Dialog,
+  IconButton,
+  ButtonBase,
 } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 import { motion } from 'framer-motion';
 import PropTypes from 'prop-types';
+import SectionHeading from '../../components/SectionHeading';
+import { tokens } from '../../theme';
 
-// AchievementCard Component for individual achievement/certificate
-const AchievementCard = ({ title, description, year, image }) => {
-  const [open, setOpen] = useState(false);
+const achievements = [
+  {
+    title: 'National Science & Math Quiz — Nationals',
+    description: 'Represented my school at the National Science and Mathematics Quiz in Ghana.',
+    year: '2020',
+    image: '/images/nsmq.jpg',
+  },
+  {
+    title: 'NSMQ Regional Qualifiers',
+    description: 'Took my school to the regional level and won it for the first time.',
+    year: '2020',
+    image: '/images/regional.png',
+  },
+  {
+    title: 'Civic Education Club President',
+    description: 'Led a student civic education club promoting societal awareness.',
+    year: '2020',
+    image: '/images/cec.png',
+  },
+  {
+    title: 'SRC President',
+    description: 'Elected student representative for the 2019–2020 academic year.',
+    year: '2019',
+    image: '/images/testimonial.png',
+  },
+];
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
-  return (
-    <>
-      <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: false }}
-        transition={{ duration: 0.6 }}
-        style={{ height: '100%' }}
+const AchievementRow = ({ item, index, onOpen }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, margin: '-40px' }}
+    transition={{ duration: 0.6, delay: index * 0.07, ease: [0.22, 1, 0.36, 1] }}
+  >
+    <ButtonBase
+      onClick={onOpen}
+      disableRipple
+      sx={{
+        width: '100%',
+        textAlign: 'left',
+        display: 'grid',
+        gridTemplateColumns: { xs: 'auto 1fr auto', md: '80px auto 1fr auto' },
+        alignItems: 'center',
+        gap: { xs: 2, md: 4 },
+        py: { xs: 3, md: 4 },
+        borderTop: `1px solid ${tokens.hairline}`,
+        transition: 'background-color 250ms',
+        '&:hover': { bgcolor: 'rgba(255, 255, 255, 0.02)' },
+        '&:hover .ach-title': { color: tokens.accent },
+      }}
+    >
+      <Typography
+        variant="overline"
+        sx={{ color: 'text.secondary', display: { xs: 'none', md: 'block' } }}
       >
-        <Card
-          sx={{
-            height: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            borderRadius: 4,
-            background: 'rgba(255, 255, 255, 0.05)',
-            backdropFilter: 'blur(10px)',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
-            transition: 'all 0.3s ease-in-out',
-            boxShadow: 'none',
-            '&:hover': {
-              transform: 'translateY(-8px)',
-              boxShadow: '0 10px 30px rgba(0, 0, 0, 0.3)',
-              border: '1px solid rgba(0, 230, 118, 0.3)',
-            },
-          }}
-        >
-          {/* Image Section */}
-          <Box sx={{ p: 2, height: 180, overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', bgcolor: 'rgba(0,0,0,0.2)' }}>
-            <CardMedia
-              component="img"
-              image={image}
-              alt={title}
-              sx={{
-                maxHeight: '100%',
-                maxWidth: '100%',
-                objectFit: 'contain',
-              }}
-            />
-          </Box>
-          {/* Text Content */}
-          <CardContent
-            sx={{
-              flexGrow: 1,
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'flex-start',
-            }}
-          >
-            <Typography
-              variant="h6"
-              sx={{ fontWeight: 600, mb: 1, fontSize: '1.1rem', textAlign: 'center', color: 'primary.main' }}
-            >
-              {title}
-            </Typography>
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              sx={{ flexGrow: 1, fontSize: '0.9rem', textAlign: 'center', mb: 2 }}
-            >
-              {description}
-            </Typography>
-            <Typography
-              variant="caption"
-              sx={{ textAlign: 'center', color: 'text.secondary', opacity: 0.7 }}
-            >
-              Year: {year}
-            </Typography>
-          </CardContent>
-          {/* Learn More Button */}
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              mt: 'auto',
-              mb: 2,
-              p: 2,
-            }}
-          >
-            <Button
-              variant="outlined"
-              size="small"
-              sx={{
-                borderRadius: 20,
-              }}
-              onClick={handleOpen}
-            >
-              Learn More
-            </Button>
-          </Box>
-        </Card>
-      </motion.div>
+        {item.year}
+      </Typography>
 
-      {/* Full-Screen Dialog */}
-      <Dialog
-        fullScreen
-        open={open}
-        onClose={handleClose}
-        PaperProps={{
-          style: {
-            background: '#121212',
-            color: '#fff'
-          }
+      <Box
+        sx={{
+          width: { xs: 48, md: 64 },
+          height: { xs: 48, md: 64 },
+          flexShrink: 0,
+          bgcolor: tokens.surface,
+          border: `1px solid ${tokens.hairline}`,
+          borderRadius: 1,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          overflow: 'hidden',
         }}
       >
-        <DialogTitle sx={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-          <Box display="flex" justifyContent="space-between" alignItems="center">
-            {title}
-            <Button onClick={handleClose} variant="contained" color="error">
-              Close
-            </Button>
-          </Box>
-        </DialogTitle>
-        <DialogContent sx={{ mt: 4 }}>
-          <Container maxWidth="md">
-            <Typography variant="h5" sx={{ mb: 4, color: 'text.primary' }}>
-              {description}
-            </Typography>
-            <Box
-              sx={{
-                width: '100%',
-                height: '60vh',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                bgcolor: 'rgba(255,255,255,0.05)',
-                borderRadius: 4,
-                overflow: 'hidden'
-              }}
-            >
-              <img
-                src={image}
-                alt={title}
-                style={{ maxHeight: '100%', maxWidth: '100%', objectFit: 'contain' }}
-              />
-            </Box>
-            <Typography variant="h6" sx={{ mt: 4, color: 'primary.main' }}>
-              Year: {year}
-            </Typography>
-          </Container>
-        </DialogContent>
-      </Dialog>
-    </>
-  );
-};
+        <Box
+          component="img"
+          src={item.image}
+          alt=""
+          loading="lazy"
+          sx={{ maxWidth: '78%', maxHeight: '78%', objectFit: 'contain' }}
+        />
+      </Box>
 
-// Main AchievementsAndCertificates Component
-const AchievementsAndCertificates = () => {
-  const achievements = [
-    {
-      title: 'National Science & Math Quiz (NSMQ National)',
-      description: 'Participated in the National Science and Mathematics Quiz in Ghana.',
-      year: '2020',
-      image: '/images/nsmq.jpg',
-    },
-    {
-      title: 'Civic Education Club President',
-      description: 'Led a student civic education club to promote societal awareness.',
-      year: '2020',
-      image: '/images/cec.png',
-    },
-    {
-      title: 'Student Representative (SRC President)',
-      description: 'Represented students for the academic year 2019-2020.',
-      year: '2019',
-      image: '/images/testimonial.png',
-    },
-    {
-      title: 'NSMQ Regional Qualifiers',
-      description: 'Took my school to Regional level and won for the first time 2020.',
-      year: '2020',
-      image: '/images/regional.png',
-    },
-  ];
-
-  return (
-    <Box sx={{ py: 12, px: { xs: 2, md: 8 }, backgroundColor: 'background.default' }}>
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1 }}
-      >
+      <Box sx={{ minWidth: 0 }}>
         <Typography
-          variant="h2"
+          className="ach-title"
+          variant="h6"
           sx={{
-            textAlign: 'center',
-            mb: 8,
-            background: (theme) => `linear-gradient(45deg, ${theme.palette.primary.main} 30%, ${theme.palette.secondary.main} 90%)`,
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            fontSize: { xs: '2.5rem', md: '3.5rem' },
+            fontSize: { xs: '1rem', md: '1.15rem' },
+            color: 'text.primary',
+            transition: 'color 250ms',
+            mb: 0.5,
           }}
         >
-          Achievements
+          {item.title}
         </Typography>
-      </motion.div>
-      <Grid container spacing={4} justifyContent="center">
-        {achievements.map((achievement, index) => (
-          <Grid item xs={12} sm={6} md={3} key={index}>
-            <AchievementCard
-              title={achievement.title}
-              description={achievement.description}
-              year={achievement.year}
-              image={achievement.image}
+        <Typography variant="body2" sx={{ color: 'text.secondary', fontSize: '0.85rem' }}>
+          {item.description}
+        </Typography>
+        <Typography
+          variant="overline"
+          sx={{ color: 'text.secondary', mt: 1, display: { xs: 'block', md: 'none' } }}
+        >
+          {item.year}
+        </Typography>
+      </Box>
+
+      <Typography variant="caption" sx={{ color: 'text.secondary', opacity: 0.6, whiteSpace: 'nowrap' }}>
+        View
+      </Typography>
+    </ButtonBase>
+  </motion.div>
+);
+
+AchievementRow.propTypes = {
+  item: PropTypes.object.isRequired,
+  index: PropTypes.number.isRequired,
+  onOpen: PropTypes.func.isRequired,
+};
+
+const AchievementsAndCertificates = () => {
+  const [active, setActive] = useState(null);
+
+  return (
+    <Box component="section" sx={{ py: { xs: 10, md: 16 }, bgcolor: tokens.surface }}>
+      <Container maxWidth="lg">
+        <SectionHeading
+          label="Beyond the code"
+          title="Leading, competing, representing."
+          meta={`${String(achievements.length).padStart(2, '0')} entries`}
+        />
+
+        <Box sx={{ borderBottom: `1px solid ${tokens.hairline}` }}>
+          {achievements.map((item, index) => (
+            <AchievementRow
+              key={item.title}
+              item={item}
+              index={index}
+              onOpen={() => setActive(item)}
             />
-          </Grid>
-        ))}
-      </Grid>
+          ))}
+        </Box>
+      </Container>
+
+      <Dialog
+        open={Boolean(active)}
+        onClose={() => setActive(null)}
+        maxWidth="md"
+        fullWidth
+        PaperProps={{
+          sx: {
+            bgcolor: tokens.raised,
+            border: `1px solid ${tokens.hairline}`,
+            backgroundImage: 'none',
+            borderRadius: 1,
+          },
+        }}
+      >
+        {active && (
+          <Box sx={{ p: { xs: 3, md: 5 } }}>
+            <Stack direction="row" justifyContent="space-between" alignItems="flex-start" sx={{ mb: 3 }}>
+              <Box>
+                <Typography variant="overline" sx={{ color: tokens.accent }}>
+                  {active.year}
+                </Typography>
+                <Typography variant="h4" sx={{ fontSize: { xs: '1.75rem', md: '2.25rem' }, mt: 1 }}>
+                  {active.title}
+                </Typography>
+              </Box>
+              <IconButton aria-label="Close" onClick={() => setActive(null)} sx={{ color: 'text.secondary' }}>
+                <CloseIcon />
+              </IconButton>
+            </Stack>
+
+            <Typography variant="body1" sx={{ color: 'text.secondary', mb: 4, maxWidth: '60ch' }}>
+              {active.description}
+            </Typography>
+
+            <Box
+              sx={{
+                bgcolor: tokens.ink,
+                border: `1px solid ${tokens.hairline}`,
+                borderRadius: 1,
+                p: 2,
+                display: 'flex',
+                justifyContent: 'center',
+                maxHeight: '60vh',
+                overflow: 'hidden',
+              }}
+            >
+              <Box
+                component="img"
+                src={active.image}
+                alt={active.title}
+                sx={{ maxWidth: '100%', maxHeight: '56vh', objectFit: 'contain' }}
+              />
+            </Box>
+          </Box>
+        )}
+      </Dialog>
     </Box>
   );
-};
-
-// PropTypes for validation
-AchievementsAndCertificates.propTypes = {
-  achievements: PropTypes.arrayOf(
-    PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      description: PropTypes.string.isRequired,
-      year: PropTypes.string.isRequired,
-      image: PropTypes.string.isRequired,
-    })
-  ),
-};
-
-AchievementCard.propTypes = {
-  title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  year: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired,
 };
 
 export default AchievementsAndCertificates;
